@@ -1,13 +1,15 @@
 use crate::todo::todo_ops::{self, TodoItem};
-
+use rocket::serde::{Deserialize, Serialize}
 
 //=================================================================================
+#[derive(Deserialize, Serialize, Debug)]
 pub struct CreateTodoRequest {
     user_id: i32,
     description: String,
     set_dt: NaiveDate,
     color: String
 }
+#[derive(Deserialize, Serialize, Debug)]
 pub struct CreateTodoResponse {
     success: bool,
     op_describe: String
@@ -33,10 +35,12 @@ impl CreateTodoResponse {
 
 
 //=================================================================================
+#[derive(Deserialize, Serialize, Debug)]
 pub struct DeleteTodoRequest {
     usr_id: i32,
     id_todo: i32,
 }
+#[derive(Deserialize, Serialize, Debug)]
 pub struct DeleteTodoResponse {
     success: bool,
     op_describe: String
@@ -69,6 +73,7 @@ impl DeleteTodoResponse {
 
 
 //=================================================================================
+#[derive(Deserialize, Serialize, Debug)]
 pub struct ChangeTodoRequest {
     usr_id: i32,
     id_todo: i32,
@@ -76,6 +81,7 @@ pub struct ChangeTodoRequest {
     set_dt: NaiveDate,
     color: String
 }
+#[derive(Deserialize, Serialize, Debug)]
 pub struct ChangeTodoResponse {
     success: bool,
     op_describe: String
@@ -109,11 +115,27 @@ impl ChangeTodoResponse {
 
 
 //=================================================================================
+#[derive(Deserialize, Serialize, Debug)]
 pub struct GetTodosRequest {
-
+    usr_id: i32,
+    dt: NaiveDate
 }
+#[derive(Deserialize, Serialize, Debug)]
 pub struct GetTodosResponse {
     success: bool,
     op_describe: String
+    todos: Vec<TodoItem>
+}
+
+impl GetTodosResponse {
+    pub fn get_todos(get_todos_data: GetTodosRequest) -> Self {
+        let user_todos: Vec<TodoItem> = todo_ops::get_month_todos(dt, usr_id, true);
+        
+        return Self {
+            success: true,
+            op_describe: "Operation ended with success".to_string(),
+            todos: user_todos
+        }
+    } 
 }
 //=================================================================================

@@ -126,6 +126,6 @@ pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<C
 pub fn get_todos_api(get_todos_data_json: Json<GetTodosRequest>) -> Json<GetTodosResponse> {
     let get_todos_data: GetTodosRequest = get_todos_data_json.into_inner();
 
-    return Json();
+    return Json(GetTodosResponse::get_todos(get_todos_data));
 }
 //=================================================================================
