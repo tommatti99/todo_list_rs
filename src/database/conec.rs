@@ -1,7 +1,6 @@
 use diesel::prelude::*;
 use dotenv::dotenv;
 use std::env;
-use crate::CustomErrors;
 
 pub fn start_connection() -> PgConnection {
     dotenv().ok();
@@ -9,7 +8,7 @@ pub fn start_connection() -> PgConnection {
         .expect("DATABASE MUST BE SET");
 
     return PgConnection::establish(&database_url)
-        .expect(CustomErrors::UnavailableDataBase.describe());
+        .expect("Unavailable Data Base");
 }
 
 #[cfg(test)]

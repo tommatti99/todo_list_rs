@@ -12,14 +12,13 @@ pub mod todo {
     pub mod todo_models;
     pub mod todo_ops;
 }
+pub mod schema;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build(
-        .mount("/api", routes![todo_api::create_todo_api])
-        .mount("/api", routes![todo_api::delete_todo_api])
-        .mount("/api", routes![todo_api::change_todo_api])
-        .mount("/api", routes![todo_api::get_todos_api])
-        .mount("/api", routes![todo_api::get_todos_api])
-    )
+    rocket::build()
+        .mount("/api/app/", routes![todo_api::create_todo_api])
+        .mount("/api/app/", routes![todo_api::delete_todo_api])
+        .mount("/api/app/", routes![todo_api::change_todo_api])
+        .mount("/api/app/", routes![todo_api::get_todos_api])
 }
