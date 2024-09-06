@@ -1,4 +1,5 @@
 use rocket::serde::json::Json;
+use crate::auth::jwt::verify_jwt_token;
 use crate::todo::todo_ops::is_todo_owner;
 use crate::todo::todo_models::{CreateTodoRequest, CreateTodoResponse,
                          DeleteTodoRequest, DeleteTodoResponse,
@@ -11,7 +12,9 @@ use crate::todo::todo_models::{CreateTodoRequest, CreateTodoResponse,
 //          Content-Type: application/json
 //      Body: 
 //          {
+//              "token": String
 //              "user_id": i32,
+//              "title": String
 //              "description": String,
 //              "set_dt": NaiveDate,
 //              "color": String
@@ -29,8 +32,12 @@ use crate::todo::todo_models::{CreateTodoRequest, CreateTodoResponse,
 #[post("/new_todo", format = "json", data = "<create_todo_data_json>")]
 pub fn create_todo_api(create_todo_data_json: Json<CreateTodoRequest>) -> Json<CreateTodoResponse> {
     let create_todo_data: CreateTodoRequest = create_todo_data_json.into_inner();
-
-    return Json(CreateTodoResponse::create(create_todo_data));
+    
+    if verify_jwt_token(create_todo_data.token) { 
+        return Json(CreateTodoResponse::create(create_todo_data));
+    } else {
+        return Json(CreateTodoResponse::session_expired());
+    }
 }
 //=================================================================================
 
@@ -43,6 +50,7 @@ pub fn create_todo_api(create_todo_data_json: Json<CreateTodoRequest>) -> Json<C
 //          Content-Type: application/json
 //      Body: 
 //          {
+//              "token": String
 //              "usr_id": i32,
 //              "id_todo": i32
 //          }
@@ -60,10 +68,14 @@ pub fn create_todo_api(create_todo_data_json: Json<CreateTodoRequest>) -> Json<C
 pub fn delete_todo_api(delete_todo_data_json: Json<DeleteTodoRequest>) -> Json<DeleteTodoResponse> {
     let delete_todo_data: DeleteTodoRequest = delete_todo_data_json.into_inner();
 
-    if is_todo_owner(delete_todo_data.usr_id, delete_todo_data.id_todo) {
-        return Json(DeleteTodoResponse::deleted(delete_todo_data));
+    if verify_jwt_token(delete_todo_data.token) { 
+        if is_todo_owner(delete_todo_data.usr_id, delete_todo_data.id_todo) {
+            return Json(DeleteTodoResponse::deleted(delete_todo_data));
+        } else {
+            return Json(DeleteTodoResponse::rejected());
+        }
     } else {
-        return Json(DeleteTodoResponse::rejected());
+        return Json(DeleteTodoResponse::session_expired())
     }
 }
 //=================================================================================
@@ -77,8 +89,10 @@ pub fn delete_todo_api(delete_todo_data_json: Json<DeleteTodoRequest>) -> Json<D
 //          Content-Type: application/json
 //      Body: 
 //          {
+//              "token": String
 //              "usr_id": i32,
 //              "id_todo": i32,
+//              "title": String
 //              "description": String,
 //              "set_dt": NaiveDate,
 //              "color": String
@@ -97,10 +111,14 @@ pub fn delete_todo_api(delete_todo_data_json: Json<DeleteTodoRequest>) -> Json<D
 pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<ChangeTodoResponse> {
     let change_todo_data: ChangeTodoRequest = change_todo_data_json.into_inner();
 
-    if is_todo_owner(change_todo_data.usr_id, change_todo_data.id_todo) {
-        return Json(ChangeTodoResponse::change(change_todo_data));
+    if verify_jwt_token(delete_todo_data.token) { 
+        if is_todo_owner(change_todo_data.usr_id, change_todo_data.id_todo) {
+            return Json(ChangeTodoResponse::change(change_todo_data));
+        } else {
+            return Json(ChangeTodoResponse::rejected());
+        }
     } else {
-        return Json(ChangeTodoResponse::rejected());
+        return Json(ChangeTodoResponse::session_expired());
     }
 }
 //=================================================================================
@@ -114,6 +132,7 @@ pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<C
 //          Content-Type: application/json
 //      Body: 
 //          {
+//              "token": String
 //              "usr_id": i32,
 //              "dt": NaiveDate
 //          }
@@ -132,6 +151,10 @@ pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<C
 pub fn get_todos_api(get_todos_data_json: Json<GetTodosRequest>) -> Json<GetTodosResponse> {
     let get_todos_data: GetTodosRequest = get_todos_data_json.into_inner();
 
-    return Json(GetTodosResponse::get_todos(get_todos_data));
+    if verify_jwt_token(delete_todo_data.token) { 
+        return Json(GetTodosResponse::get_todos(get_todos_data));
+    } else {
+        return Json(GetTodosResponse::session_expired());
+    }
 }
 //=================================================================================

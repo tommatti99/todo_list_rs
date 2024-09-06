@@ -5,6 +5,7 @@ use chrono::NaiveDate;
 //=================================================================================
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateTodoRequest {
+    pub token: String,
     pub user_id: i32,
     pub description: String,
     pub set_dt: NaiveDate,
@@ -17,7 +18,7 @@ pub struct CreateTodoResponse {
 }
 impl CreateTodoResponse {
     pub fn create(create_todo_data: CreateTodoRequest) -> Self {
-        if TodoItem::new(create_todo_data.user_id, create_todo_data.description, create_todo_data.set_dt, create_todo_data.color) {
+        if TodoItem::new(create_todo_data.user_id, create_todo_data.title, create_todo_data.description, create_todo_data.set_dt, create_todo_data.color) {
             return Self {
                 success: true,
                 op_describe: "Operation ended with success".to_string()
@@ -29,6 +30,12 @@ impl CreateTodoResponse {
             }
         }
     }
+    pub fn session_expired() -> Self {
+        Self {
+            success: true,
+            op_describe: "Session expired".to_string()
+        }
+    }
 }
 //=================================================================================
 
@@ -38,6 +45,7 @@ impl CreateTodoResponse {
 //=================================================================================
 #[derive(Deserialize, Serialize, Debug)]
 pub struct DeleteTodoRequest {
+    pub token: String,
     pub usr_id: i32,
     pub id_todo: i32,
 }
@@ -67,6 +75,13 @@ impl DeleteTodoResponse {
             op_describe: "Operation not permitted. Not the todo owner".to_string()
         }
     }
+
+    pub fn session_expired() -> Self {
+        Self {
+            success: true,
+            op_describe: "Session expired".to_string()
+        }
+    }
 }
 //=================================================================================
 
@@ -76,8 +91,10 @@ impl DeleteTodoResponse {
 //=================================================================================
 #[derive(Deserialize, Serialize, Debug)]
 pub struct ChangeTodoRequest {
+    pub token: String,
     pub usr_id: i32,
     pub id_todo: i32,
+    pub title: String,
     pub description: String,
     pub set_dt: NaiveDate,
     pub color: String
@@ -90,7 +107,7 @@ pub struct ChangeTodoResponse {
 
 impl ChangeTodoResponse {
     pub fn change(change_todo_data: ChangeTodoRequest) -> Self {
-        if todo_ops::modify_todo(change_todo_data.id_todo, change_todo_data.description, change_todo_data.set_dt, change_todo_data.color) {
+        if todo_ops::modify_todo(change_todo_data.id_todo, change_todo_data.title, change_todo_data.description, change_todo_data.set_dt, change_todo_data.color) {
             return Self {
                 success: true,
                 op_describe: "Operation ended with success".to_string()
@@ -109,6 +126,13 @@ impl ChangeTodoResponse {
             op_describe: "Operation not permitted. Not the todo owner".to_string()
         }
     }
+
+    pub fn session_expired() -> Self {
+        Self {
+            success: true,
+            op_describe: "Session expired".to_string()
+        }
+    }
 }
 //=================================================================================
 
@@ -118,6 +142,7 @@ impl ChangeTodoResponse {
 //=================================================================================
 #[derive(Deserialize, Serialize, Debug)]
 pub struct GetTodosRequest {
+    pub token: String,
     pub usr_id: i32,
     pub dt: NaiveDate
 }
@@ -138,5 +163,12 @@ impl GetTodosResponse {
             todos: user_todos
         }
     } 
+
+    pub fn session_expired() -> Self {
+        Self {
+            success: true,
+            op_describe: "Session expired".to_string()
+        }
+    }
 }
 //=================================================================================

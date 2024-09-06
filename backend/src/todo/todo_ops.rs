@@ -13,13 +13,14 @@ pub struct TodoItem {
     pub todo_id: i32,
     pub creation_dt: NaiveDate,
     pub active_status: bool,
+    pub title: String,
     pub description: String,
     pub set_dt: NaiveDate,
     pub color: String
 }
 
 impl TodoItem {
-    pub fn new(usr_id: i32, descrip: String, dt: NaiveDate, set_color: String) -> bool {
+    pub fn new(usr_id: i32, todo_title: String, descrip: String, dt: NaiveDate, set_color: String) -> bool {
         let mut conec: PgConnection = start_connection();
 
         let new_todo: TodoItem = 
@@ -28,6 +29,7 @@ impl TodoItem {
                 todo_id: Self::gen_todo_id(),
                 creation_dt: Utc::now().date_naive(),
                 active_status: true,
+                title: todo_title,
                 description: descrip,
                 set_dt: dt,
                 color: set_color
@@ -111,12 +113,13 @@ pub fn delete_todo(id_todo: i32) -> bool {
         }
 }
 
-pub fn modify_todo(id_todo: i32, new_describe: String, new_dt: NaiveDate, new_color: String) -> bool {
+pub fn modify_todo(id_todo: i32, new_title: String, new_describe: String, new_dt: NaiveDate, new_color: String) -> bool {
     let mut conec: PgConnection = start_connection();
 
     match diesel::update(schema::todos::dsl::todos
         .filter(schema::todos::dsl::todo_id.eq(id_todo)))
         .set((
+            schema::todos::dsl::title.eq(new_title),
             schema::todos::dsl::description.eq(new_describe),
             schema::todos::dsl::set_dt.eq(new_dt),
             schema::todos::dsl::color.eq(new_color)
