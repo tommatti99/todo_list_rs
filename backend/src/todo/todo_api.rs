@@ -33,7 +33,7 @@ use crate::todo::todo_models::{CreateTodoRequest, CreateTodoResponse,
 pub fn create_todo_api(create_todo_data_json: Json<CreateTodoRequest>) -> Json<CreateTodoResponse> {
     let create_todo_data: CreateTodoRequest = create_todo_data_json.into_inner();
     
-    if verify_jwt_token(create_todo_data.token) { 
+    if verify_jwt_token(create_todo_data.user_id, &create_todo_data.token.clone()) { 
         return Json(CreateTodoResponse::create(create_todo_data));
     } else {
         return Json(CreateTodoResponse::session_expired());
@@ -68,7 +68,7 @@ pub fn create_todo_api(create_todo_data_json: Json<CreateTodoRequest>) -> Json<C
 pub fn delete_todo_api(delete_todo_data_json: Json<DeleteTodoRequest>) -> Json<DeleteTodoResponse> {
     let delete_todo_data: DeleteTodoRequest = delete_todo_data_json.into_inner();
 
-    if verify_jwt_token(delete_todo_data.token) { 
+    if verify_jwt_token(delete_todo_data.usr_id, &delete_todo_data.token.clone()) { 
         if is_todo_owner(delete_todo_data.usr_id, delete_todo_data.id_todo) {
             return Json(DeleteTodoResponse::deleted(delete_todo_data));
         } else {
@@ -111,7 +111,7 @@ pub fn delete_todo_api(delete_todo_data_json: Json<DeleteTodoRequest>) -> Json<D
 pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<ChangeTodoResponse> {
     let change_todo_data: ChangeTodoRequest = change_todo_data_json.into_inner();
 
-    if verify_jwt_token(delete_todo_data.token) { 
+    if verify_jwt_token(change_todo_data.usr_id, &change_todo_data.token.clone()) { 
         if is_todo_owner(change_todo_data.usr_id, change_todo_data.id_todo) {
             return Json(ChangeTodoResponse::change(change_todo_data));
         } else {
@@ -151,7 +151,7 @@ pub fn change_todo_api(change_todo_data_json: Json<ChangeTodoRequest>) -> Json<C
 pub fn get_todos_api(get_todos_data_json: Json<GetTodosRequest>) -> Json<GetTodosResponse> {
     let get_todos_data: GetTodosRequest = get_todos_data_json.into_inner();
 
-    if verify_jwt_token(delete_todo_data.token) { 
+    if verify_jwt_token(get_todos_data.usr_id, &get_todos_data.token.clone()) { 
         return Json(GetTodosResponse::get_todos(get_todos_data));
     } else {
         return Json(GetTodosResponse::session_expired());

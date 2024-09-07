@@ -47,6 +47,7 @@ pub struct RecoverAccRequest {
     pub user_email: String,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct RecoverAccResponse {
     pub recover_code_sent: bool,
 }
@@ -64,6 +65,7 @@ impl RecoverAccResponse {
 //=================================================================================
 
 //=================================================================================
+#[derive(Debug, Serialize, Deserialize)]
 pub struct RecoverAccTokenValidationRequest {
     pub user_email: String,
     pub recover_code: String
@@ -129,6 +131,7 @@ pub struct RenewTokenRequest {
     pub token: String,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub struct RenewTokenResponse {
     pub status: bool,
     pub new_token: String

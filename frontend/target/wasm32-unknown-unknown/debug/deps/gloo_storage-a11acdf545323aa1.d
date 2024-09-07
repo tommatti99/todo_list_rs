@@ -1,0 +1,10 @@
+/home/tommatti/Projects/todo_list_rs/frontend/target/wasm32-unknown-unknown/debug/deps/libgloo_storage-a11acdf545323aa1.rmeta: /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/lib.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/errors.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/local_storage.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/session_storage.rs
+
+/home/tommatti/Projects/todo_list_rs/frontend/target/wasm32-unknown-unknown/debug/deps/libgloo_storage-a11acdf545323aa1.rlib: /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/lib.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/errors.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/local_storage.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/session_storage.rs
+
+/home/tommatti/Projects/todo_list_rs/frontend/target/wasm32-unknown-unknown/debug/deps/gloo_storage-a11acdf545323aa1.d: /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/lib.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/errors.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/local_storage.rs /home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/session_storage.rs
+
+/home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/lib.rs:
+/home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/errors.rs:
+/home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/local_storage.rs:
+/home/tommatti/.cargo/registry/src/index.crates.io-6f17d22bba15001f/gloo-storage-0.2.2/src/session_storage.rs:

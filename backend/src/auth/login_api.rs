@@ -1,15 +1,10 @@
-use crate::user::login::login_ops;
 use rocket::serde::json::Json;
-use crate::user::login::login_models::{LoginUserRequest, LoginUserResponse};
-use crate::user::login::login_models::RecoverAccTokenValidationRequest;
-use crate::user::login::login_models::RecoverAccTokenValidationResponse;
-use crate::user::login::login_models::RecoverAccRequest;
-use crate::user::login::login_models::RecoverAccResponse;
-use crate::user::login::login_models::ChangePasswRequest;
-use crate::user::login::login_models::ChangePasswResponse;
-use crate::user::login::login_models::RenewTokenRequest;
-use crate::user::login::login_models::RenewTokenResponse;
-
+use crate::auth::login_ops;
+use crate::auth::login_models::{LoginUserRequest, LoginUserResponse,
+                                RecoverAccRequest, RecoverAccResponse, 
+                                RecoverAccTokenValidationRequest, RecoverAccTokenValidationResponse,
+                                ChangePasswRequest, ChangePasswResponse, 
+                                RenewTokenRequest, RenewTokenResponse};
 //=================================================================================
 //  REQUEST:
 //      Header: 
@@ -29,6 +24,7 @@ use crate::user::login::login_models::RenewTokenResponse;
 //              "token": String 
 //          }
 //
+
 #[post("/authenticate", format = "json", data = "<login_data_json>")]
 pub fn user_login_api(login_data_json: Json<LoginUserRequest>) -> rocket::serde::json::Json<LoginUserResponse>  {
 
