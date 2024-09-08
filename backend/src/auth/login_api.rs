@@ -11,8 +11,9 @@ use crate::auth::login_models::{LoginUserRequest, LoginUserResponse,
 //          Content-Type: application/json
 //      Body: 
 //          {
-//              "user_email": "admin", 
-//              "passw": "admin"
+//              "usr_id": String,
+//              "user_email": String, 
+//              "passw": String
 //          }
 //    
 // RESPONSE:
@@ -142,7 +143,7 @@ pub fn change_passw_api(change_passw_data_json: Json<ChangePasswRequest>) -> Jso
 //          }
 //
 #[post("/new_token", format = "json", data = "<new_token_data_json>")]
-pub fn renew_token_api(new_token_data_json: RenewTokenRequest) -> Json<RenewTokenResponse> {
+pub fn renew_token_api(new_token_data_json: Json<RenewTokenRequest>) -> Json<RenewTokenResponse> {
 
     let new_token_data: RenewTokenRequest = new_token_data_json.into_inner();
 

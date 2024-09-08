@@ -1,4 +1,5 @@
 DROP TABLE
     todos,
-    users
+    users,
+    colors
 ;

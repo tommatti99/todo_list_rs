@@ -225,3 +225,5 @@ const CHANGE_PASSW_API: &str= "api/auth/change_passw";
 //          }
 //
 const RENEW_TOKEN_API: &str= "api/auth/new_token";
+
+const GET_COLORS: &str = "";

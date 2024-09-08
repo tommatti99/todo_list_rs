@@ -1,9 +1,12 @@
 use chrono::{DateTime, Duration, Utc};
-use jsonwebtoken::{encode, decode, Algorithm, Header, EncodingKey, DecodingKey, Validation};
+use diesel::PgConnection;
+use jsonwebtoken::{decode, encode, Algorithm, DecodingKey, EncodingKey, Header, TokenData, Validation};
 use std::env;
-extern crate serde_derive;
-use crate::errors::CustomErrors;
 use rocket::serde::{Serialize, Deserialize};
+use crate::database::conec::start_connection;
+use crate::schema;
+use diesel::prelude::*;
+
 
 #[derive(Debug,Serialize, Deserialize)]
 pub struct Claims {
@@ -28,13 +31,13 @@ fn gen_encoding_jwt_key() -> EncodingKey {
     return EncodingKey::from_secret(secret.clone().as_bytes());
 }
 
-pub fn get_jwt(user_id: i16) -> String {
-     match encode(&Header::new(Algorithm::RS256), &Claims::default(user_id.to_string()), &jwt_key()) {
+pub fn get_jwt(user_id: i32) -> String {
+     match encode(&Header::new(Algorithm::RS256), &Claims::default(user_id.to_string()), &gen_encoding_jwt_key()) {
         Ok(token) => {
             return token;
         },
         Err(_) => {
-            return CustomErrors::AuthenticationError.describe().to_string();
+            return "authentication error".to_string();
         }
     }
 }
@@ -42,11 +45,10 @@ pub fn get_jwt(user_id: i16) -> String {
 fn jwt_verify_its_on_database(usr_id: i32, token: &str) -> bool {
     let mut conec: PgConnection = start_connection();
 
-    let jwt_code_db =
-        schema::users::dsl::users
+    let jwt_code_db = schema::users::dsl::users
             .select(schema::users::dsl::jwt_code)
             .filter(schema::users::dsl::user_id.eq(usr_id))
-            .first::<i32>(&mut conec);
+            .first::<String>(&mut conec).unwrap();
 
     if jwt_code_db == token {
         return true;
@@ -56,7 +58,7 @@ fn jwt_verify_its_on_database(usr_id: i32, token: &str) -> bool {
 }
 
 fn jwt_verify_expiration(decoded_token: TokenData<Claims>) -> bool {
-    let expiration = DateTime::parse_from_str(&token.claims.exp.clone(), "%Y-%m-%d %H:%M:%S").expect(&CustomErrors::SessionExpired.describe());
+    let expiration = DateTime::parse_from_str(&decoded_token.claims.exp.clone(), "%Y-%m-%d %H:%M:%S").expect("Parsing Error");
 
     if Utc::now() < expiration {
         return true;
@@ -68,7 +70,7 @@ fn jwt_verify_expiration(decoded_token: TokenData<Claims>) -> bool {
 pub fn verify_jwt_token(usr_id: i32, token: &str) -> bool {
     let decoding_key: &DecodingKey = &DecodingKey::from_secret("secret".as_ref());
 
-    if jwt_verify_its_on_database(token.clone()) {
+    if jwt_verify_its_on_database(usr_id, token) {
         match decode::<Claims>(&token, decoding_key, &Validation::default()) {
             Ok(decoded_token) => { 
                 return jwt_verify_expiration(decoded_token);

@@ -1,17 +1,19 @@
 extern crate diesel;
+use diesel::pg::PgConnection;
 use serde::{Deserialize, Serialize};
-use crate::user::profile::profile_ops;
-use crate::user::login::jwt;
-use crate::utils::email::email_models::EmailMessage;
-use crate::utils::email::email;
-use crate::CustomErrors;
-use crate::utils::fast_ops_diesel;
-use crate::user::login::recover_ops::verify_recover_code_is_valid;
+use crate::auth::jwt; 
+use crate::schema;
+use crate::database::conec::start_connection;
+use diesel::prelude::*;
+use crate::utils::email;
+
+use super::{login_ops, recover_ops};
+use super::recover_ops::verify_recover_code_is_valid;
 
 //=================================================================================
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct LoginUserRequest {
-    pub user_email: String,
+    pub usr_id: i32,
     pub passw: String,
     pub token: Option<String>
 }
@@ -24,7 +26,7 @@ pub struct LoginUserResponse {
 
 impl LoginUserResponse {
     pub fn login_success(login_data: LoginUserRequest) -> Self {
-        let new_token: String = jwt::get_jwt(fast_ops_diesel::user_id_by_email(login_data.user_email));
+        let new_token: String = jwt::get_jwt(login_data.usr_id);
         
         return LoginUserResponse {
             status: true,
@@ -44,7 +46,7 @@ impl LoginUserResponse {
 //=================================================================================
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RecoverAccRequest {
-    pub user_email: String,
+    pub user_email: String
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -54,8 +56,15 @@ pub struct RecoverAccResponse {
 
 impl RecoverAccResponse {
     pub fn send_recover_email(recover_acc_data: RecoverAccRequest) -> Self {
-        let usr_id: i16 = fast_ops_diesel::user_id_by_email(recover_acc_data.user_email);
-        let sent: bool = email::send_email(EmailMessage::recover_acc(usr_id));
+        let mut conec: PgConnection = start_connection();
+
+        let usr_id: i32 = schema::users::dsl::users
+            .select(schema::users::dsl::user_id)
+            .filter(schema::users::dsl::email.eq(recover_acc_data.user_email.clone()))
+            .first::<i32>(&mut conec).unwrap();
+
+
+        let sent: bool = email::send_email(email::EmailMessage::recover_acc_email(recover_ops::gen_recover_code(usr_id), recover_acc_data.user_email));
 
         return RecoverAccResponse {
             recover_code_sent: sent
@@ -68,7 +77,7 @@ impl RecoverAccResponse {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RecoverAccTokenValidationRequest {
     pub user_email: String,
-    pub recover_code: String
+    pub recover_code: i32
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -79,8 +88,17 @@ pub struct RecoverAccTokenValidationResponse {
 
 impl RecoverAccTokenValidationResponse {
     pub fn verify_recover_acc_code(recover_acc_code: RecoverAccTokenValidationRequest) -> Self {
-        if verify_recover_code_is_valid(recover_acc_code.user_email, recover_acc_code.recover_code) {
-            let new_token: String = jwt::get_jwt(fast_ops_diesel::user_id_by_email(recover_acc_code.user_email));
+        let mut conec: PgConnection = start_connection();
+
+        let usr_id: i32 = schema::users::dsl::users
+            .select(schema::users::dsl::user_id)
+            .filter(schema::users::dsl::email.eq(recover_acc_code.user_email))
+            .first::<i32>(&mut conec).unwrap();
+
+        if verify_recover_code_is_valid(usr_id, recover_acc_code.recover_code) {
+
+
+            let new_token: String = jwt::get_jwt(usr_id);
         
             return RecoverAccTokenValidationResponse {
                 status: true,
@@ -90,7 +108,7 @@ impl RecoverAccTokenValidationResponse {
         } else {
             return RecoverAccTokenValidationResponse {
                 status: false,
-                token: CustomErrors::RecoverCodeWrong.describe().to_string()
+                token: "Erro, código de recuperação invalido".to_string()
             }
         }
     }
@@ -106,19 +124,30 @@ pub struct ChangePasswRequest {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ChangePasswResponse {
     pub status: bool,
-    pub description: bool
+    pub description: String
 }
 
 impl ChangePasswResponse {
     pub fn execute_password_change(change_passw_data: ChangePasswRequest) -> Self {
-        if jwt::verify_jwt(&change_passw_data.token.clone()) {
-           profile_ops::change_passw_by_token(change_passw_data);
+        let mut conec: PgConnection = start_connection();
 
+        let usr_id: i32 = schema::users::dsl::users
+            .select(schema::users::dsl::user_id)
+            .filter(schema::users::dsl::email.eq(change_passw_data.user_email.clone()))
+            .first::<i32>(&mut conec).unwrap();
+
+        if jwt::verify_jwt_token(usr_id, &change_passw_data.token.clone()) {
+            login_ops::change_passw_by_token(usr_id, change_passw_data.user_email, change_passw_data.token, change_passw_data.new_passw);
+
+            return ChangePasswResponse {
+                status: true,
+                description: "Senha alterada com sucesso".to_string()
+            };
 
         } else {
             return ChangePasswResponse {
                 status: false,
-                description: CustomErrors::SessionExpired.describe()
+                description: "Senha incorreta".to_string()
             };
         }
 
@@ -127,7 +156,7 @@ impl ChangePasswResponse {
 //=================================================================================
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RenewTokenRequest {
-    pub user_email: String,
+    pub usr_id: i32,
     pub token: String,
 }
 
@@ -138,8 +167,8 @@ pub struct RenewTokenResponse {
 } 
 impl RenewTokenResponse {
     pub fn gen_new_token(login_data: RenewTokenRequest) -> Self {
-        if jwt::verify_jwt(&login_data.token.clone()) {
-            let new_token = jwt::get_jwt(fast_ops_diesel::user_id_by_email(login_data.user_email));
+        if jwt::verify_jwt_token(login_data.usr_id.clone(), &login_data.token.clone()) {
+            let new_token = jwt::get_jwt(login_data.usr_id);
 
             return RenewTokenResponse {
                 status: true,
@@ -149,7 +178,7 @@ impl RenewTokenResponse {
         } else {
             return RenewTokenResponse {
                 status: false,
-                new_token: CustomErrors::SessionExpired.describe().to_string()
+                new_token: "Session expired".to_string()
             };
         }
     }

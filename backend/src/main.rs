@@ -17,6 +17,9 @@ pub mod todo {
     pub mod todo_models;
     pub mod todo_ops;
 }
+pub mod utils {
+    pub mod email;
+}
 pub mod schema;
 
 #[launch]

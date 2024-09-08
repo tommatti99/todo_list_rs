@@ -1,6 +1,6 @@
 use yew::prelude::*;
 use yew_router::prelude::*;
-use crate::routes::Route;
+use crate::{assets::components::btn_genric_small::BtnGenericSmall, routes::Route};
 use yew_router::hooks::use_navigator;
 use yew::callback::Callback;
 
@@ -17,7 +17,11 @@ pub fn Todos() -> Html {
     
     return html! {
         <>
-        {"Area Logada"}
+            <BtnGenericSmall 
+            btn_text = {"LOG OUT"}
+            route = {Route::Home}
+            css_extra = {"display: flex; margin-right: 4em; margin-left: auto; margin-top: 1em; font-size: 1em;"}
+            />
         </>
     }
 }

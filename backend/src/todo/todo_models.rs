@@ -7,6 +7,7 @@ use chrono::NaiveDate;
 pub struct CreateTodoRequest {
     pub token: String,
     pub user_id: i32,
+    pub title: String,
     pub description: String,
     pub set_dt: NaiveDate,
     pub color: String
@@ -146,29 +147,32 @@ pub struct GetTodosRequest {
     pub usr_id: i32,
     pub dt: NaiveDate
 }
-#[derive(Deserialize, Serialize)]
+
+#[derive(Deserialize, Serialize, Debug)]
 pub struct GetTodosResponse {
     pub success: bool,
     pub op_describe: String,
-    pub todos: Vec<TodoItem>
+    pub todos: Option<Vec<TodoItem>>,
 }
 
 impl GetTodosResponse {
     pub fn get_todos(get_todos_data: GetTodosRequest) -> Self {
         let user_todos: Vec<TodoItem> = TodoItem::get_month_todos(get_todos_data.dt, get_todos_data.usr_id, true);
         
-        return Self {
+        Self {
             success: true,
             op_describe: "Operation ended with success".to_string(),
-            todos: user_todos
+            todos: Some(user_todos),
         }
-    } 
+    }
 
     pub fn session_expired() -> Self {
         Self {
-            success: true,
-            op_describe: "Session expired".to_string()
+            success: false, // Geralmente, uma sessão expirada é um caso de falha
+            op_describe: "Session expired".to_string(),
+            todos: None, // Nenhuma lista de tarefas é fornecida quando a sessão expira
         }
     }
 }
+
 //=================================================================================

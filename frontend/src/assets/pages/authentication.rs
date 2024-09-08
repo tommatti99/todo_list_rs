@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use yew_router::{navigator, prelude::*};
+use yew_router::prelude::*;
 use crate::{routes::Route, Theme};
 use yew_router::hooks::use_navigator;
 use yew::callback::Callback;

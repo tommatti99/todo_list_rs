@@ -1,9 +1,6 @@
 
-   use yew::prelude::*;
-use yew_router::prelude::*;
+use yew::prelude::*;
 use crate::{routes::Route, Theme};
-use yew_router::hooks::use_navigator;
-use yew::callback::Callback;
 use crate::assets::components::{page_footer::Footer, page_header::Header, btn_genric_small::BtnGenericSmall, btn_generic::BtnGeneric};
 
 
