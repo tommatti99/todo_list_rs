@@ -4,6 +4,7 @@ use crate::{assets::components::{btn_genric_small::BtnGenericSmall, menu_hamburg
 use yew_router::hooks::use_navigator;
 use yew::callback::Callback;
 use chrono::NaiveDate;
+use crate::assets::components::calendar::Calendar;
 
 #[derive(PartialEq, Properties)]
 pub struct TodoItem {
@@ -50,6 +51,9 @@ pub fn Todos() -> Html {
 
             <HamburgerMenu 
                 todos = {vec![todo_mock]}/>
+
+
+            <Calendar />
         </>
     }
 }

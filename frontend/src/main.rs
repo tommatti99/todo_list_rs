@@ -12,6 +12,7 @@ pub mod assets {
         pub mod btn_generic;
         pub mod btn_genric_small;
         pub mod btn_new_todo;
+        pub mod calendar;
         pub mod menu_hamburger;
         pub mod page_footer;
         pub mod page_header;
