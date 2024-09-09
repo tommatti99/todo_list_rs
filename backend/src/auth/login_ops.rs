@@ -112,3 +112,44 @@ pub fn change_passw_by_token(usr_id: i32, usr_email: String, token: String, new_
         return false;
     }
 }
+
+
+
+pub fn create_new_user(user_name_new_user: String, email_new_user: String, passw_new_user: &String) -> bool {
+    let mut conec: PgConnection = start_connection();
+    let mut new_user_id: i32;
+
+    match schema::users::dsl::users
+    .select(diesel::dsl::max(schema::users::dsl::user_id))
+    .first::<Option<i32>>(&mut conec)
+        .expect("Error Creating a new user") {
+            Some(max_user_id) => {
+                new_user_id = max_user_id;
+            },
+            None => {
+                new_user_id = 0;
+            }
+        }
+    new_user_id = new_user_id + 1;
+
+
+    if !verify_user_exists(email_new_user.clone()).unwrap() {
+        match diesel::insert_into(users::table)
+            .values((
+                schema::users::dsl::email.eq(email_new_user),
+                schema::users::dsl::user_id.eq(new_user_id),
+                schema::users::dsl::user_name.eq(user_name_new_user),
+                schema::users::dsl::salt_hash_bytes.eq(new_hash(passw_new_user).unwrap().to_string().as_bytes().to_vec()),
+                ))
+            .execute(&mut conec) {
+                Ok(_) => {
+                    return true;
+                },
+                Err(_) => {
+                    return false;
+                }
+            }
+    } else {
+        return false;
+    }
+}

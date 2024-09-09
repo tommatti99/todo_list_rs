@@ -35,6 +35,7 @@ fn rocket() -> _ {
         .mount("/api/auth/", routes![login_api::user_acc_recover_validate_code_api])
         .mount("/api/auth/", routes![login_api::user_acc_recover_call_api])
         .mount("/api/auth/", routes![login_api::user_login_api])
+        .mount("/api/auth/", routes![login_api::create_account_api])
 }
  
  

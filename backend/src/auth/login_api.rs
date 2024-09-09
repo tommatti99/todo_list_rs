@@ -4,7 +4,8 @@ use crate::auth::login_models::{LoginUserRequest, LoginUserResponse,
                                 RecoverAccRequest, RecoverAccResponse, 
                                 RecoverAccTokenValidationRequest, RecoverAccTokenValidationResponse,
                                 ChangePasswRequest, ChangePasswResponse, 
-                                RenewTokenRequest, RenewTokenResponse};
+                                RenewTokenRequest, RenewTokenResponse,
+                                NewAccountRequest, NewAccountResponse};
 //=================================================================================
 //  REQUEST:
 //      Header: 
@@ -148,4 +149,30 @@ pub fn renew_token_api(new_token_data_json: Json<RenewTokenRequest>) -> Json<Ren
     let new_token_data: RenewTokenRequest = new_token_data_json.into_inner();
 
     return Json(RenewTokenResponse::gen_new_token(new_token_data));
+}
+//=================================================================================
+// REQUEST
+//      Header: Content-Type: application/json
+//      Body: 
+//          {
+//              user_name_new_user: String,
+//              email_new_user: String,
+//              passw_new_user: String
+
+//          }
+//
+// RESPONSE:
+//      Header: 
+//          Content-Type: application/json
+//      Body:
+//          {
+//              "status": bool
+//          }
+//
+#[post("/new_account", format = "json", data = "<new_account_data_json>")]
+pub fn create_account_api(new_account_data_json: Json<NewAccountRequest>) -> Json<NewAccountResponse> {
+
+    let new_account_data: NewAccountRequest = new_account_data_json.into_inner();
+
+    return Json(NewAccountResponse::create_account(new_account_data));
 }

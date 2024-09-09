@@ -183,3 +183,23 @@ impl RenewTokenResponse {
         }
     }
 }
+//=================================================================================
+#[derive(Debug, Serialize, Deserialize)]
+pub struct NewAccountRequest {
+    pub user_name_new_user: String,
+    pub email_new_user: String,
+    pub passw_new_user: String
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct NewAccountResponse {
+    pub status: bool,
+} 
+
+impl NewAccountResponse {
+    pub fn create_account(new_account_data: NewAccountRequest) -> NewAccountResponse {
+        return Self {
+            status: login_ops::create_new_user(new_account_data.user_name_new_user, new_account_data.email_new_user, &new_account_data.passw_new_user)
+        }
+    }
+}
