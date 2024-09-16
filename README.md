@@ -1,6 +1,6 @@
 It's a todo list written entirely in rust.
 
-Its used Rust Yew for frontend and Rust Rocket for Backend.
+I use Rust Yew for frontend and Rust Rocket for Backend.
 
 ### Backend
   - 1º. Start the Postgresql at your machine and set the database link at .env file, seems something like "DATABASE_URL=postgres://username:password@localhost/diesel_demo".
