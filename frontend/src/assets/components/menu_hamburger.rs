@@ -26,11 +26,12 @@ pub fn HamburgerMenu(props: &HamburgerMenuProps) -> Html {
 
     let hamburger_close = {
         html! {
-            <button onclick={hamburger_toggle.clone()} class="btn_hamburger_menu_closed" style={format!("margin-right: auto; margin-left: 1.5em; background-color: {}; margin-top: 0.55em; border: none; cursor: pointer; width: 3.5em; height: 2.2em; display: flex; flex-direction: column; justify-content: space-between;",theme.sec_color)} >
-                <div class="btn_hamburger_menu_comp" style={format!("background-color: {}; width: 100%; height: 0.4em; border-radius: 1em; margin: 0em; transition: all 0.3s ease;", theme.main_color)}></div>
-                <div class="btn_hamburger_menu_comp" style={format!("background-color: {}; width: 100%; height: 0.4em; border-radius: 1em; margin: 0em; transition: all 0.3s ease;", theme.main_color)}></div>
-                <div class="btn_hamburger_menu_comp" style={format!("background-color: {}; width: 100%; height: 0.4em; border-radius: 1em; margin: 0em; transition: all 0.3s ease;", theme.main_color)}></div>
-            </button>
+
+            <button onclick={hamburger_toggle.clone()} class="frame hamb-menu-0d99a3a5378f" style={format!("background-color: {};",theme.sec_color)}>
+                <div class="shape rect rectangle-f1225598b64a" style={format!("background-color: {};", theme.main_color)}></div>
+                <div class="shape rect rectangle-f122bc99d204" style={format!("background-color: {};", theme.main_color)}></div>
+                <div class="shape rect rectangle-f122bcda537b" style={format!("background-color: {};", theme.main_color)}></div>
+          </button>
         }
     };
 

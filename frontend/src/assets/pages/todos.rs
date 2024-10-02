@@ -5,6 +5,7 @@ use yew_router::hooks::use_navigator;
 use yew::callback::Callback;
 use chrono::NaiveDate;
 use crate::assets::components::calendar::Calendar;
+use crate::assets::components::btn_new_task::New_Task;
 
 #[derive(PartialEq, Properties)]
 pub struct TodoItem {
@@ -33,14 +34,7 @@ pub fn Todos() -> Html {
                 set_dt: NaiveDate::from_ymd(2024, 08, 01),
                 color: "color".to_string()
             };
-    //hamburger menu 
 
-    // btn_logout
-
-    // btn new todo
-
-    // calendar
-    
     return html! {
         <>
             <BtnGenericSmall 
@@ -53,6 +47,7 @@ pub fn Todos() -> Html {
                 todos = {vec![todo_mock]}/>
 
 
+            <New_Task />
             <Calendar />
         </>
     }

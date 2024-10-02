@@ -11,7 +11,7 @@ pub mod assets {
         pub mod btn_cog;
         pub mod btn_generic;
         pub mod btn_genric_small;
-        pub mod btn_new_todo;
+        pub mod btn_new_task;
         pub mod calendar;
         pub mod menu_hamburger;
         pub mod page_footer;
@@ -30,6 +30,7 @@ pub mod assets {
 pub mod api;
 pub mod routes;
 
+#[derive(Properties, PartialEq, Clone)]
 pub struct Theme {
     pub main_color: String,
     pub sec_color: String,

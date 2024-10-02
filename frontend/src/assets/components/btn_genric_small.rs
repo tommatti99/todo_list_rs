@@ -19,9 +19,20 @@ pub fn BtnGenericSmall(props: &BtnGenericSmallProps) -> Html {
 
     let onclick: Callback<MouseEvent> = Callback::from(move |_| navigator.push(&route_clone));
     return html! {
-        <div >
-            <button style={format!("color: {}; border: none; background-color: {}; cursor: pointer; font-weight: bold; {}", theme.main_color, theme.sec_color, props.css_extra )} 
-                onclick={onclick}>{props.btn_text.clone()}</button>
+        <div>
+            <button class="frame log-out-0eb5c8701c47" onclick={onclick}>
+            <div class="shape text log-out-0eb57dcbe410">
+              <div class="text-node-html" id="html-text-node-d8bee35b-299f-8000-8005-0eb57dcbe410" data-x="1900" data-y="50">
+                <div class="root rich-text root-0" xmlns="http://www.w3.org/1999/xhtml">
+                  <div class="paragraph-set root-0-paragraph-set-0">
+                    <p class="paragraph root-0-paragraph-set-0-paragraph-0" dir="auto"><span class="text-node root-0-paragraph-set-0-paragraph-0-text-0" style={format!("caret-color:{}; color:{};", theme.main_color,theme.main_color)}>
+                    {props.btn_text.clone()}
+                    </span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </button>
         </div>
     }
 }
