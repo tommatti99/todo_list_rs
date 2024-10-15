@@ -139,60 +139,58 @@ body {
 
 /* Hamb Menu */
 .hamb-menu-0d99a3a5378f {
+    left: 2em;
+    top: 1em;
     position: absolute;
+    display: flex;  
+    flex-direction: column;
     cursor:pointer;
     border:none;
-    left: 38px;
-    top: 40px;
-    width: 89px;
-    height: 74px;
+    width: 7.6em;
+    height: 6em;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.01em;
   }
   
   /* Rectangle */
   .rectangle-f122bcda537b {
-    position: absolute;
-    left: 0px;
-    top: 25px;
-    width: 89px;
-    height: 24px;
+    display: flex;
+    width: 100%;
+    height: 1.7em;
     border-radius: 80px;
   }
   
   /* Rectangle */
   .rectangle-f122bc99d204 {
-    position: absolute;
-    left: 0px;
-    top: 53px;
-    width: 89px;
-    height: 21px;
+    display: flex;
+    width: 100%;
+    height: 1.7em;
     border-radius: 80px;
   }
   
   /* Rectangle */
   .rectangle-f1225598b64a {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 89px;
-    height: 21px;
+    display: flex;
+    width: 100%;
+    height: 1.7em;
     border-radius: 80px;
   }
 
   .month-name-0eac3e4a3c6b {
-    position: absolute;
-    left: 756px;
-    top: 127px;
-    width: 408px;
-    height: 92px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 26.60em;
+    height: 6em;
+    margin-top: 8em;
   }
   
   /* Month */
   .month-f12134b7d82d {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 408px;
-    height: 92px;
+    position: inherit;
+    width: 100%;
+    height: 100%;
   }
   .month-f12134b7d82d .root-0 {
     
@@ -238,20 +236,20 @@ body {
     border: none;
     background-color: transparent;
     position: absolute;
-    left: 1744px;
-    top: 52px;
-    width: 98px;
-    height: 30px;
+    right: 2em;
+    left: auto;
+    top: 1em;
+    width: 9.8em;
+    height: 3em;
   }
   
   /* LOG OUT */
   .log-out-0eb57dcbe410 {
-    border:none;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 98px;
-    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
   .log-out-0eb57dcbe410 .root-0 {
     display: flex;
@@ -262,8 +260,6 @@ body {
     display: inline-flex;
     flex-direction: column;
     justify-content: inherit;
-    
-    margin-right: 1px;
     vertical-align: top;
   }
   .log-out-0eb57dcbe410 .root-0-paragraph-set-0-paragraph-0 {
@@ -273,8 +269,9 @@ body {
     text-align: left;
   }
   .log-out-0eb57dcbe410 .root-0-paragraph-set-0-paragraph-0-text-0 {
-    text-transform: none;
-
+    position: inherit;
+    width: 100%;
+    height: 100%;
     line-break: auto;
     overflow-wrap: initial;
     white-space: pre;
@@ -288,22 +285,25 @@ body {
   }
 
   /* Next Month */
-.next-month-0d9a2d96ad8d {
-    border:none;
+  .next-month-0d9a2d96ad8d {
+    position: absolute;
+    bottom: 12em;
+    right: 4em;
+    border: none;
     background-color: transparent;
     cursor: pointer;
-    position: absolute;
-    left: 1837px;
-    top: 374px;
-    width: 56px;
-    height: 536px;
-  }
+    width: 4em;
+    height: 38.28em;
+}
+
   
   /* arrow-next */
   .arrownext-f12f9a6d2d6c > svg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: inherit;
     transform: translate(0px,0px);
   }
   .arrownext-f12f9a6d2d6c {
@@ -348,42 +348,41 @@ body {
   
   /* Rectangle */
   .rectangle-f120e370f4c7 {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 56px;
-    height: 536px;
+    display: flex;
+    width: 100%;
+    height: 100%;
     background: #12CF8B;
     border-radius: 20px;
   }
 
   /* Last Month */
 .last-month-0d9a1c4d45e5 {
+    position: absolute;
+    bottom: 12em;
+    left: 4em;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    position: absolute;
-    left: 27px;
-    top: 374px;
-    width: 58px;
-    height: 536px;
+    width: 4em;
+    height: 38.28em;
   }
   
   /* arrow-prev */
   .arrowprev-f12f7fd000d2 > svg {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: inherit;
     transform: translate(0px,0px);
   }
   .arrowprev-f12f7fd000d2 {
     position: absolute;
-    left: 8px;
+    left: 2px;
     top: 249px;
     width: 50px;
     height: 50px;
   }
-  
   /* svg-path */
   .svgpath-f12f7fd09697 > svg {
     position: absolute;
@@ -402,8 +401,6 @@ body {
   /* base-background */
   .basebackg-f12f7fd07f25 > svg {
     position: absolute;
-    top: 0px;
-    left: 0px;
     transform: translate(0px,0px);
   }
   .basebackg-f12f7fd07f25 {
@@ -418,35 +415,30 @@ body {
   
   /* Rectangle */
   .rectangle-f11a6fde1df1 {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 56px;
-    height: 536px;
+    display: flex;
+    width: 100%;
+    height: 100%;
     background: #12CF8B;
     border-radius: 20px;
   }
 
   /* Week Days */
 .week-days-0d99e4eb21c5 {
-    position: absolute;
-    left: 272px;
-    top: 307px;
-    width: 1460px;
-    height: 48px;
+    position: inherit;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 5em;
     display:grid; 
-    grid-template-columns: repeat(7, 1fr); 
-    justify-content: center; 
+    grid-template-columns: repeat(7, 3fr); 
+    justify-content:baseline; 
     align-content:center;
   }
   
   /* SUNDAY */
   .sunday-f12999f45716 {
-    position: absolute;
-    left: 1236px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .sunday-f12999f45716 .root-0 {
     
@@ -488,16 +480,14 @@ body {
   
   /* MONDAY */
   .monday-f1299682a13d {
-    position: absolute;
-    left: 1030px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .monday-f1299682a13d .root-0 {
-    
-    
     display: flex;
+    width: 100%;
+    height: 100%;
     white-space: break-spaces;
     align-items: flex-start;
   }
@@ -534,11 +524,9 @@ body {
   
   /* TUESDAY */
   .tuesday-f12993d15dcd {
-    position: absolute;
-    left: 824px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .tuesday-f12993d15dcd .root-0 {
     
@@ -580,11 +568,9 @@ body {
   
   /* WEDNESDAY */
   .wednesday-f12989ccace7 {
-    position: absolute;
-    left: 412px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .wednesday-f12989ccace7 .root-0 {
     
@@ -626,11 +612,9 @@ body {
   
   /* THURSDAY */
   .thursday-f1298527f195 {
-    position: absolute;
-    left: 206px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .thursday-f1298527f195 .root-0 {
     display: flex;
@@ -670,11 +654,9 @@ body {
   
   /* FRIDAY */
   .friday-f12978a210c5 {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    position: inherit;
+    height: 100%;
+    width: 100%;
   }
   .friday-f12978a210c5 .root-0 {
     display: flex;
@@ -714,15 +696,11 @@ body {
   
   /* SATURDAY */
   .saturday-f12821dce182 {
-    position: absolute;
-    left: 618px;
-    top: 0px;
-    width: 126px;
-    height: 48px;
+    height: 100%;
+    width: 100%;
+    position: inherit;
   }
   .saturday-f12821dce182 .root-0 {
-    
-    
     display: flex;
     white-space: break-spaces;
     align-items: flex-start;
@@ -760,9 +738,7 @@ body {
 
   /* Month Days */
 .month-days-0d9a02295970 {
-    position: absolute;
-    left: 272px;
-    top: 467px;
+    position: inherit;
     width: 1460px;
     height: 512px;
     border: none; 
@@ -806,11 +782,10 @@ body {
 } 
 
 .calendar-body {
-    width: auto;
-    height: auto;
-    align-items: center;
-    justify-content: center;
-
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  justify-content: space-between; 
+  height: 100%; 
+  margin-top: 8em;
 }

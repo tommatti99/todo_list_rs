@@ -64,11 +64,11 @@ pub fn app() -> Html {
     let theme: Theme = Theme::aqua_green_theme();
 
     return html! {
-        <div style={format!("background-color: {};",theme.sec_color)}>
+        <>
             <BrowserRouter>
                     <Switch<Route> render={|routes: Route| switch(&routes)} />
             </BrowserRouter>
-        </div>
+        </>
     };
 }
 
