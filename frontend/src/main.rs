@@ -27,7 +27,6 @@ pub mod assets {
     }
 
 }
-pub mod api;
 pub mod routes;
 
 #[derive(Properties, PartialEq, Clone)]

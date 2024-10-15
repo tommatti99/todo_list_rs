@@ -21,9 +21,22 @@ pub fn BtnGeneric(props: &BtnGenericProps) -> Html {
     let onclick: Callback<MouseEvent> = Callback::from(move |_| navigator.push(&route_clone));
 
     return html! {
-        <div >
-            <button style={format!("color: {}; height: 3em; justify-content: center; text-align: center; align-items: center; width: 10em; border-radius:1em; border: none; background-color: {}; cursor: pointer; font-weight: bold; {}", theme.sec_color, theme.main_color, props.css_extra )} 
-                onclick={onclick}>{props.btn_text.clone()}</button>
-        </div>
+        <>
+        <button class="frame create-acc-1013bd0321c1" style={format!("{}", props.css_extra )}>
+          <div class="shape rect rectangle-1013bd0321c2">
+          </div>
+          <div class="shape text crie-sua-c-1013bd0321c3">
+            <div class="text-node-html" id="html-text-node-95c43ca6-14dd-80c8-8005-1013bd0321c3" data-x="847.5" data-y="-2152.083333333333">
+              <div class="root rich-text root-0" style="display:flex;white-space:break-spaces;align-items:flex-start" xmlns="http://www.w3.org/1999/xhtml">
+                <div class="paragraph-set root-0-paragraph-set-0">
+                  <p class="paragraph root-0-paragraph-set-0-paragraph-0" dir="auto"><span class="text-node root-0-paragraph-set-0-paragraph-0-text-0" style="color:rgba(255, 255, 255, 1);text-transform:none;line-break:auto;overflow-wrap:initial;white-space:break-spaces;text-rendering:geometricPrecision;caret-color:rgba(255, 255, 255, 1);text-decoration:none;--font-id:sourcesanspro;--fills:[[&quot;^ &quot;,&quot;~:fill-color&quot;,&quot;#ffffff&quot;,&quot;~:fill-opacity&quot;,1]];letter-spacing:0px;font-size:27px;font-family:&quot;sourcesanspro&quot;;font-style:normal;font-weight:bold" 
+                    onclick={onclick}>{props.btn_text.clone()}
+                  </span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </button>
+        </>
     }
 }
