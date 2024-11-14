@@ -1,6 +1,8 @@
-It's a todo list written entirely in rust.
+It's a todo list written entirely in rust. 
 
-I use Rust Yew for frontend and Rust Rocket for Backend.
+It has an authentication system and sends notifications by email.
+
+I used Rust Yew for frontend and Rust Rocket for Backend.
 
 ### Backend
   - 1º. Start the Postgresql at your machine and set the database link at .env file, seems something like "DATABASE_URL=postgres://username:password@localhost/diesel_demo".
